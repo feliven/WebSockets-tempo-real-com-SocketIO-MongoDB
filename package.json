@@ -5,8 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "ts-node ./src/Server.ts",
-    "dev": "npx nodemon ./src/Server.ts"
+    "start": "ts-node ./src/SocketBackend.ts",
+    "dev": "npx nodemon ./src/SocketBackend.ts"
   },
   "keywords": [],
   "author": "",

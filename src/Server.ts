@@ -14,10 +14,8 @@ const pathAtual = url.fileURLToPath(import.meta.url);
 const pathPublic = path.join(pathAtual, "../../public");
 app.use(express.static(pathPublic));
 
-io.on("connection", (socket) => {
-  console.log("um usuário se conectou");
-});
-
 httpServer.listen(port, () => {
   console.log("Server running on port 3000");
 });
+
+export default io;
