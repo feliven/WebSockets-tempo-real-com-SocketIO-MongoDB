@@ -3,10 +3,11 @@ import url from "url";
 import path from "path";
 import http from "http";
 import { Server } from "socket.io";
+import type { ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData } from "./types.ts";
 
 const app = express();
 const httpServer = http.createServer(app);
-const io = new Server(httpServer);
+const io = new Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>(httpServer);
 
 const port = Number(process.env.port || 3000);
 
