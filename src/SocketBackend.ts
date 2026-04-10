@@ -8,7 +8,7 @@ io.on("connection", (socket) => {
     socket.join(nomeDocumento);
   });
 
-  socket.on("texto_editor", (texto, nomeDocumento) => {
+  socket.on("texto_editor", ({ texto, nomeDocumento }) => {
     socket.to(nomeDocumento).emit("texto_para_clients", texto);
   });
 
