@@ -10,11 +10,10 @@ export type Documento = {
 
 export type ServerToClientEvents = {
   texto_para_clients: (texto: string) => void;
-  conteudo_doc: (conteudo: string) => void;
 };
 
 export type ClientToServerEvents = {
-  selecionar_documento: (nomeDocumento: string) => void;
+  selecionar_documento: (nomeDocumento: string, callback: (texto: string) => void) => void;
   texto_editor: (dados: TextoENomeDocumento) => void;
 };
 

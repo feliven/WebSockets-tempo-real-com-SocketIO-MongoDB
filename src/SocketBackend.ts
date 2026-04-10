@@ -26,13 +26,13 @@ const encontrarDocumento = (nomeDocumento: string) => {
 io.on("connection", (socket) => {
   console.log("um usuário se conectou", socket.id);
 
-  socket.on("selecionar_documento", (nomeDocumento) => {
+  socket.on("selecionar_documento", (nomeDocumento, retornarTexto) => {
     socket.join(nomeDocumento);
 
     const doc = encontrarDocumento(nomeDocumento);
 
     if (doc) {
-      socket.emit("conteudo_doc", doc.conteudo);
+      retornarTexto(doc.conteudo);
     }
   });
 
