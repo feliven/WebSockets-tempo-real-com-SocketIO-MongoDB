@@ -1,22 +1,19 @@
 {
   // Visit https://aka.ms/tsconfig to read more about this file
-  "exclude": ["./public"],
   "compilerOptions": {
     // File Layout
-    "rootDir": "./src",
+    "rootDir": "./",
     "outDir": "./dist",
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
     "module": "nodenext",
     "target": "esnext",
+    "types": [],
     // For nodejs:
-    "lib": ["esnext"],
-    "types": ["node", "express"],
+    // "lib": ["esnext"],
+    // "types": ["node"],
     // and npm install -D @types/node
-
-    "allowImportingTsExtensions": true,
-    "noEmit": true,
 
     // Other Outputs
     "sourceMap": true,
