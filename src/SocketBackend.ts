@@ -37,7 +37,13 @@ io.on("connection", (socket) => {
   });
 
   socket.on("texto_editor", ({ texto, nomeDocumento }) => {
-    socket.to(nomeDocumento).emit("texto_para_clients", texto);
+    const doc = encontrarDocumento(nomeDocumento);
+
+    if (doc) {
+      doc.conteudo = texto;
+
+      socket.to(nomeDocumento).emit("texto_para_clients", texto);
+    }
   });
 
   socket.on("disconnect", (motivo) => {
