@@ -3,8 +3,14 @@ export type TextoENomeDocumento = {
   nomeDocumento: string;
 };
 
+export type Documento = {
+  nome: string;
+  conteudo: string;
+};
+
 export type ServerToClientEvents = {
   texto_para_clients: (texto: string) => void;
+  conteudo_doc: (conteudo: string) => void;
 };
 
 export type ClientToServerEvents = {

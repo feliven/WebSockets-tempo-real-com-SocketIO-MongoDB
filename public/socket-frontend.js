@@ -10,6 +10,10 @@ export const emitirTextoDigitado = (dados) => {
   socket.emit("texto_editor", dados);
 };
 
+socket.on("conteudo_doc", (conteudo) => {
+  atualizarTextoEditor(conteudo);
+});
+
 socket.on("texto_para_clients", (texto) => {
   atualizarTextoEditor(texto);
 });
