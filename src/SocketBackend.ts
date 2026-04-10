@@ -4,6 +4,10 @@ import io from "./Server.ts";
 io.on("connection", (socket) => {
   console.log("um usuário se conectou", socket.id);
 
+  socket.on("selecionar_documento", (nomeDocumento) => {
+    socket.join(nomeDocumento);
+  });
+
   socket.on("texto_editor", (texto) => {
     socket.broadcast.emit("texto_para_clients", texto);
   });

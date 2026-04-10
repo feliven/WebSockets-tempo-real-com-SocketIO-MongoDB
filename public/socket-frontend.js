@@ -2,6 +2,10 @@ import { atualizarTextoEditor } from "./documento.js";
 
 const socket = io();
 
+export const selecionarDocumento = (nomeDocumento) => {
+  socket.emit("selecionar_documento", nomeDocumento);
+};
+
 export const emitirTextoDigitado = (textoDigitado) => {
   socket.emit("texto_editor", textoDigitado);
 };
