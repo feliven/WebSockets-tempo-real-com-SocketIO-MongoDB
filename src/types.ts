@@ -7,6 +7,7 @@ export type Documento = {
 
 export type ServerToClientEvents = {
   texto_para_clients: (texto: string) => void;
+  documento_excluido: (idDocumento: string) => void;
 };
 
 export type ClientToServerEvents = {

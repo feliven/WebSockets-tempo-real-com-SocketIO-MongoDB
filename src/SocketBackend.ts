@@ -40,6 +40,7 @@ io.on("connection", (socket) => {
 
   socket.on("excluir_documento", async (idDocumento) => {
     await excluirDocumento(idDocumento);
+    io.emit("documento_excluido", idDocumento);
   });
 
   socket.on("selecionar_documento", async (idDocumento, retornarTexto) => {

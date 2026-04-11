@@ -1,4 +1,4 @@
-import { atualizarTextoEditor } from "./documento.js";
+import { atualizarTextoEditor, desabilitarEdicao } from "./documento.js";
 
 const socket = io("http://localhost:3000");
 
@@ -18,6 +18,10 @@ export const excluirDocumento = (idDocumento) => {
 
 socket.on("texto_para_clients", (texto) => {
   atualizarTextoEditor(texto);
+});
+
+socket.on("documento_excluido", (idDocumentoExcluido) => {
+  desabilitarEdicao(idDocumentoExcluido);
 });
 
 socket.on("disconnect", (motivo) => {
