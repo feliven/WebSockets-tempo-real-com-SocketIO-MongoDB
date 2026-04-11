@@ -1,17 +1,27 @@
 import { criarDocumento } from "./socket-frontend-index.js";
 
 const elemListaDocumentos = document.getElementById("lista-documentos");
+const elemListaVazia = document.getElementById("lista-documentos-vazia");
+
+const timeoutAindaCarregando = setTimeout(() => {
+  elemListaVazia.textContent = "Aguarde...";
+}, 3000);
+
+const timeoutMsgErro = setTimeout(() => {
+  elemListaVazia.textContent = "Erro ao carregar documentos. Tente novamente.";
+}, 7000);
 
 export const listarLinkDocumento = (doc) => {
+  elemListaVazia.remove();
+
   const nomeArquivo = doc.nome;
-  const nomeArquivoUrl = nomeArquivo.replaceAll(" ", "+");
   const idArquivo = doc._id;
 
   // <a href="documento.html?nome=JavaScript" class="list-group-item list-group-item-action"> JavaScript </a>
 
   const linkDocumento = document.createElement("a");
   linkDocumento.textContent = nomeArquivo;
-  linkDocumento.href = `documento.html?id=${idArquivo}&nome=${nomeArquivoUrl}`;
+  linkDocumento.href = `documento.html?id=${idArquivo}`;
   linkDocumento.classList.add("list-group-item", "list-group-item-action");
   linkDocumento.id = idArquivo;
 
@@ -19,6 +29,15 @@ export const listarLinkDocumento = (doc) => {
 };
 
 export const listarTodosOsDocumentos = (docs) => {
+  console.log(docs.length);
+
+  if (!docs.length) {
+    elemListaVazia.textContent = "Não foram encontrados documentos para exibir.";
+    clearTimeout(timeoutAindaCarregando);
+    clearTimeout(timeoutMsgErro);
+    return;
+  }
+
   docs.forEach((doc) => {
     listarLinkDocumento(doc);
   });
