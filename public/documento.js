@@ -4,21 +4,34 @@ const parametros = new URLSearchParams(window.location.search);
 const idDocumento = parametros.get("id");
 
 const elemTituloDocumento = document.getElementById("titulo-documento");
-
 const elemEditorTexto = document.getElementById("editor-texto");
 const elemBotaoExcluir = document.getElementById("excluir-documento");
 
+const timeoutAindaCarregando = setTimeout(() => {
+  elemTituloDocumento.textContent = "Aguarde...";
+}, 1000);
+
+const timeoutMsgErro = setTimeout(() => {
+  elemTituloDocumento.textContent = "Erro ao carregar. Tente novamente.";
+}, 7000);
+
 selecionarDocumento(idDocumento, (resposta) => {
   if (!resposta.existe) {
-    elemBotaoExcluir.disabled = true;
-
     elemTituloDocumento.textContent = "(Documento inexistente)";
     elemEditorTexto.disabled = true;
     elemEditorTexto.placeholder = "Documento não existe ou foi removido.";
+
+    elemBotaoExcluir.disabled = true;
   } else {
+    clearTimeout(timeoutAindaCarregando);
+    clearTimeout(timeoutMsgErro);
     elemTituloDocumento.textContent = resposta.nome || "(Documento sem título)";
+
+    elemEditorTexto.disabled = false;
     elemEditorTexto.value = resposta.conteudo;
     elemEditorTexto.placeholder = "Comece a digitar...";
+
+    elemBotaoExcluir.disabled = false;
   }
 });
 
