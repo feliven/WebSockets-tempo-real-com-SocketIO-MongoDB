@@ -1,7 +1,7 @@
 import type { Documento } from "./types.ts";
 import io from "./Server.ts";
-import { documentosColecao } from "./dbConnect.ts";
-// When using nodenext module resolution, you need to import the .ts file, not .js.
+import { atualizarDocumento, encontrarDocumento } from "./documentosDb.ts";
+// When using nodenext module resolution, you need to import the .ts file, not .js
 
 const documentos: Documento[] = [
   {
@@ -18,12 +18,6 @@ const documentos: Documento[] = [
   },
 ];
 
-const encontrarDocumento = (nomeDocumento: string) => {
-  const docProcurado = documentosColecao.findOne({ nome: nomeDocumento });
-
-  return docProcurado;
-};
-
 io.on("connection", (socket) => {
   console.log("um usuário se conectou", socket.id);
 
@@ -38,11 +32,9 @@ io.on("connection", (socket) => {
   });
 
   socket.on("texto_editor", async ({ texto, nomeDocumento }) => {
-    const doc = await encontrarDocumento(nomeDocumento);
+    const resultadoAtualizacao = await atualizarDocumento(nomeDocumento, texto);
 
-    if (doc) {
-      doc.conteudo = texto;
-
+    if (resultadoAtualizacao.modifiedCount) {
       socket.to(nomeDocumento).emit("texto_para_clients", texto);
     }
   });
