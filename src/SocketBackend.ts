@@ -1,6 +1,7 @@
 import type { Documento } from "./types.ts";
 import io from "./Server.ts";
-import { atualizarDocumento, encontrarDocumento } from "./documentosDb.ts";
+import { atualizarDocumento, encontrarDocumento, obterDocumentos } from "./documentosDb.ts";
+import type { WithId } from "mongodb";
 // When using nodenext module resolution, you need to import the .ts file, not .js
 
 const documentos: Documento[] = [
@@ -20,6 +21,12 @@ const documentos: Documento[] = [
 
 io.on("connection", (socket) => {
   console.log("um usuário se conectou", socket.id);
+
+  socket.on("obter_documentos", async (retornarDocs) => {
+    const docs = await obterDocumentos();
+
+    retornarDocs(docs);
+  });
 
   socket.on("selecionar_documento", async (nomeDocumento, retornarTexto) => {
     socket.join(nomeDocumento);

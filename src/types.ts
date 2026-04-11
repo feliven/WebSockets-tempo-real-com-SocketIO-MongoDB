@@ -1,3 +1,5 @@
+import type { WithId } from "mongodb";
+
 export type TextoENomeDocumento = {
   texto: string;
   nomeDocumento: string;
@@ -13,6 +15,7 @@ export type ServerToClientEvents = {
 };
 
 export type ClientToServerEvents = {
+  obter_documentos: (callback: (retornarDocs: WithId<Documento>[]) => WithId<Documento>[]) => void;
   selecionar_documento: (nomeDocumento: string, callback: (texto: string) => void) => void;
   texto_editor: (dados: TextoENomeDocumento) => void;
 };

@@ -1,5 +1,10 @@
 import { documentosColecao } from "./dbConnect.ts";
 
+export const obterDocumentos = () => {
+  const docs = documentosColecao.find().toArray();
+  return docs;
+};
+
 export const encontrarDocumento = (nomeDocumento: string) => {
   const docProcurado = documentosColecao.findOne({ nome: nomeDocumento });
 

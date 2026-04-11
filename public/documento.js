@@ -1,4 +1,4 @@
-import { emitirTextoDigitado, selecionarDocumento } from "./socket-frontend.js";
+import { emitirTextoDigitado, selecionarDocumento } from "./socket-frontend-documento.js";
 
 const parametros = new URLSearchParams(window.location.search);
 const nomeDocumento = parametros.get("nome");
