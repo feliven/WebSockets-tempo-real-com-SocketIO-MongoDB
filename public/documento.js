@@ -45,7 +45,7 @@ elemEditorTexto.addEventListener("keyup", (e) => {
 
 elemBotaoExcluir.addEventListener("click", () => {
   excluirDocumento(idDocumento);
-  window.location.assign("/public/index.html");
+  window.location.assign("/public/");
 });
 
 export const atualizarTextoEditor = (texto) => {

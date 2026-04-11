@@ -29,8 +29,6 @@ export const listarLinkDocumento = (doc) => {
 };
 
 export const listarTodosOsDocumentos = (docs) => {
-  console.log(docs.length);
-
   if (!docs.length) {
     elemListaVazia.textContent = "Não foram encontrados documentos para exibir.";
     clearTimeout(timeoutAindaCarregando);
