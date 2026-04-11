@@ -31,13 +31,15 @@ io.on("connection", (socket) => {
   socket.on("obter_documentos", async (retornarDocs) => {
     const docs = await obterDocumentos();
 
-    retornarDocs(docs);
+    if (docs) {
+      retornarDocs(docs);
+    }
   });
 
   socket.on("criar_documento", async (nomeDocumento) => {
     const resultado = await criarDocumento(nomeDocumento);
 
-    if (resultado.acknowledged) {
+    if (resultado?.acknowledged) {
       const idResultado = resultado.insertedId;
       const novoDoc = { _id: idResultado, nome: nomeDocumento };
       io.emit("atualizar_homepage", novoDoc);
@@ -47,7 +49,7 @@ io.on("connection", (socket) => {
   socket.on("excluir_documento", async (idDocumento) => {
     const resultado = await excluirDocumento(idDocumento);
 
-    if (resultado.acknowledged) {
+    if (resultado?.acknowledged) {
       io.emit("documento_excluido", idDocumento);
       io.emit("atualizar_homepage", { _id: new ObjectId(idDocumento) });
     }
@@ -67,7 +69,7 @@ io.on("connection", (socket) => {
   socket.on("texto_editor", async ({ _id, conteudo }) => {
     const resultadoAtualizacao = await atualizarDocumento(_id.toString(), conteudo);
 
-    if (resultadoAtualizacao.modifiedCount) {
+    if (resultadoAtualizacao?.modifiedCount) {
       socket.to(_id.toString()).emit("texto_para_clients", conteudo);
     }
   });
