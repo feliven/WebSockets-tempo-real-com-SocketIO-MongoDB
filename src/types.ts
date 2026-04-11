@@ -13,6 +13,7 @@ export type DocumentoResposta = {
 export type ServerToClientEvents = {
   texto_para_clients: (texto: string) => void;
   documento_excluido: (idDocumento: string) => void;
+  atualizar_homepage: (doc: Partial<WithId<Documento>>) => void;
 };
 
 export type ClientToServerEvents = {

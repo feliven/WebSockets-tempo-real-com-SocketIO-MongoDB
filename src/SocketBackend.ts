@@ -7,6 +7,7 @@ import {
   excluirDocumento,
   obterDocumentos,
 } from "./documentosDb.ts";
+import { ObjectId } from "mongodb";
 // When using nodenext module resolution, you need to import the .ts file, not .js
 
 const documentos: Documento[] = [
@@ -34,12 +35,22 @@ io.on("connection", (socket) => {
   });
 
   socket.on("criar_documento", async (nomeDocumento) => {
-    await criarDocumento(nomeDocumento);
+    const resultado = await criarDocumento(nomeDocumento);
+
+    if (resultado.acknowledged) {
+      const idResultado = resultado.insertedId;
+      const novoDoc = { _id: idResultado, nome: nomeDocumento };
+      io.emit("atualizar_homepage", novoDoc);
+    }
   });
 
   socket.on("excluir_documento", async (idDocumento) => {
-    await excluirDocumento(idDocumento);
-    io.emit("documento_excluido", idDocumento);
+    const resultado = await excluirDocumento(idDocumento);
+
+    if (resultado.acknowledged) {
+      io.emit("documento_excluido", idDocumento);
+      io.emit("atualizar_homepage", { _id: new ObjectId(idDocumento) });
+    }
   });
 
   socket.on("selecionar_documento", async (idDocumento, retornarTexto) => {
