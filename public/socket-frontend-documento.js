@@ -12,6 +12,10 @@ export const emitirTextoDigitado = (dados) => {
   socket.emit("texto_editor", dados);
 };
 
+export const excluirDocumento = (nomeDocumento) => {
+  socket.emit("excluir_documento", nomeDocumento);
+};
+
 socket.on("texto_para_clients", (texto) => {
   atualizarTextoEditor(texto);
 });

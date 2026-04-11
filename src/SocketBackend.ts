@@ -1,6 +1,12 @@
 import type { Documento } from "./types.ts";
 import io from "./Server.ts";
-import { atualizarDocumento, criarDocumento, encontrarDocumento, obterDocumentos } from "./documentosDb.ts";
+import {
+  atualizarDocumento,
+  criarDocumento,
+  encontrarDocumento,
+  excluirDocumento,
+  obterDocumentos,
+} from "./documentosDb.ts";
 import type { WithId } from "mongodb";
 // When using nodenext module resolution, you need to import the .ts file, not .js
 
@@ -30,6 +36,10 @@ io.on("connection", (socket) => {
 
   socket.on("criar_documento", async (nomeDocumento) => {
     await criarDocumento(nomeDocumento);
+  });
+
+  socket.on("excluir_documento", async (nomeDocumento) => {
+    await excluirDocumento(nomeDocumento);
   });
 
   socket.on("selecionar_documento", async (nomeDocumento, retornarTexto) => {

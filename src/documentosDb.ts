@@ -5,6 +5,11 @@ export const criarDocumento = (nomeDocumento: string) => {
   return docCriado;
 };
 
+export const excluirDocumento = (nomeDocumento: string) => {
+  const docExcluido = documentosColecao.deleteOne({ nome: nomeDocumento });
+  return docExcluido;
+};
+
 export const obterDocumentos = () => {
   const docs = documentosColecao.find().toArray();
   return docs;
