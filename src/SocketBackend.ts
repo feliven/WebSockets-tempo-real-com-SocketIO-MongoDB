@@ -38,25 +38,25 @@ io.on("connection", (socket) => {
     await criarDocumento(nomeDocumento);
   });
 
-  socket.on("excluir_documento", async (nomeDocumento) => {
-    await excluirDocumento(nomeDocumento);
+  socket.on("excluir_documento", async (idDocumento) => {
+    await excluirDocumento(idDocumento);
   });
 
-  socket.on("selecionar_documento", async (nomeDocumento, retornarTexto) => {
-    socket.join(nomeDocumento);
-
-    const doc = await encontrarDocumento(nomeDocumento);
+  socket.on("selecionar_documento", async (idDocumento, retornarTexto) => {
+    const doc = await encontrarDocumento(idDocumento);
 
     if (doc) {
+      socket.join(doc._id.toString());
+
       retornarTexto(doc.conteudo);
     }
   });
 
-  socket.on("texto_editor", async ({ texto, nomeDocumento }) => {
-    const resultadoAtualizacao = await atualizarDocumento(nomeDocumento, texto);
+  socket.on("texto_editor", async ({ _id, conteudo }) => {
+    const resultadoAtualizacao = await atualizarDocumento(_id.toString(), conteudo);
 
     if (resultadoAtualizacao.modifiedCount) {
-      socket.to(nomeDocumento).emit("texto_para_clients", texto);
+      socket.to(_id.toString()).emit("texto_para_clients", conteudo);
     }
   });
 

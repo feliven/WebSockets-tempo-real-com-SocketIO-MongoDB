@@ -2,26 +2,29 @@ import { emitirTextoDigitado, excluirDocumento, selecionarDocumento } from "./so
 
 const parametros = new URLSearchParams(window.location.search);
 const nomeDocumento = parametros.get("nome");
+const idDocumento = parametros.get("id");
 
-const elTituloDocumento = document.getElementById("titulo-documento");
-elTituloDocumento.textContent = nomeDocumento || "Documento sem título";
-selecionarDocumento(nomeDocumento);
+const elemTituloDocumento = document.getElementById("titulo-documento");
+elemTituloDocumento.textContent = nomeDocumento || "Documento sem título";
+selecionarDocumento(idDocumento);
 
-const elEditorTexto = document.getElementById("editor-texto");
+const elemEditorTexto = document.getElementById("editor-texto");
 
-elEditorTexto.addEventListener("keyup", (e) => {
+elemEditorTexto.addEventListener("keyup", (e) => {
   const textoDigitado = e.target.value;
 
-  emitirTextoDigitado({ texto: textoDigitado, nomeDocumento });
+  const doc = { _id: idDocumento, conteudo: textoDigitado, nome: nomeDocumento };
+
+  emitirTextoDigitado(doc);
 });
 
 export const atualizarTextoEditor = (texto) => {
-  elEditorTexto.value = texto;
+  elemEditorTexto.value = texto;
 };
 
 const elemBotaoExcluir = document.getElementById("excluir-documento");
 
 elemBotaoExcluir.addEventListener("click", () => {
-  excluirDocumento(nomeDocumento);
+  excluirDocumento(idDocumento);
   window.location.assign("/public/index.html");
 });
