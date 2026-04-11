@@ -1,20 +1,32 @@
 import { emitirTextoDigitado, excluirDocumento, selecionarDocumento } from "./socket-frontend-documento.js";
 
 const parametros = new URLSearchParams(window.location.search);
-const nomeDocumento = parametros.get("nome");
 const idDocumento = parametros.get("id");
 
 const elemTituloDocumento = document.getElementById("titulo-documento");
-elemTituloDocumento.textContent = nomeDocumento || "Documento sem título";
 
 const elemEditorTexto = document.getElementById("editor-texto");
 const elemBotaoExcluir = document.getElementById("excluir-documento");
+
+selecionarDocumento(idDocumento, (resposta) => {
+  if (!resposta.existe) {
+    elemBotaoExcluir.disabled = true;
+
+    elemTituloDocumento.textContent = "(Documento inexistente)";
+    elemEditorTexto.disabled = true;
+    elemEditorTexto.placeholder = "Documento não existe ou foi removido.";
+  } else {
+    elemTituloDocumento.textContent = resposta.nome || "(Documento sem título)";
+    elemEditorTexto.value = resposta.conteudo;
+    elemEditorTexto.placeholder = "Comece a digitar...";
+  }
+});
 
 elemEditorTexto.addEventListener("keyup", (e) => {
   if (elemEditorTexto.disabled) return;
 
   const textoDigitado = e.target.value;
-  const doc = { _id: idDocumento, conteudo: textoDigitado, nome: nomeDocumento };
+  const doc = { _id: idDocumento, conteudo: textoDigitado };
   emitirTextoDigitado(doc);
 });
 
@@ -36,15 +48,3 @@ export const desabilitarEdicao = (idDocumentoExcluido) => {
     alert("Este documento foi excluído por outro usuário!");
   }
 };
-
-selecionarDocumento(idDocumento, (resposta) => {
-  if (!resposta.existe) {
-    elemBotaoExcluir.disabled = true;
-
-    elemTituloDocumento.textContent = "(Documento inexistente)";
-    elemEditorTexto.disabled = true;
-    elemEditorTexto.placeholder = "Documento não existe ou foi removido.";
-    return;
-  }
-  elemEditorTexto.value = resposta.conteudo;
-});

@@ -55,18 +55,20 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on("selecionar_documento", async (idDocumento, retornarTexto) => {
+  socket.on("selecionar_documento", async (idDocumento, retornarDoc) => {
     const doc = await encontrarDocumento(idDocumento);
 
     if (doc) {
       socket.join(doc._id.toString());
-      retornarTexto({ existe: true, conteudo: doc.conteudo });
+      retornarDoc({ ...doc, existe: true });
     } else {
-      retornarTexto({ existe: false, conteudo: null });
+      retornarDoc({ existe: false, nome: null, conteudo: null });
     }
   });
 
   socket.on("texto_editor", async ({ _id, conteudo }) => {
+    if (!conteudo) return;
+
     const resultadoAtualizacao = await atualizarDocumento(_id.toString(), conteudo);
 
     if (resultadoAtualizacao?.modifiedCount) {

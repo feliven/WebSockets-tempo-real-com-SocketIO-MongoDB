@@ -1,13 +1,12 @@
 import type { WithId } from "mongodb";
 
 export type Documento = {
-  nome: string;
-  conteudo: string;
+  nome: string | null;
+  conteudo: string | null;
 };
 
-export type DocumentoResposta = {
+export type DocumentoResposta = Documento & {
   existe: boolean;
-  conteudo: string | null;
 };
 
 export type ServerToClientEvents = {
