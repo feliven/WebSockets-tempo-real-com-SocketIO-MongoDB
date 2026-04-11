@@ -7,7 +7,12 @@ export const encontrarDocumento = (nomeDocumento: string) => {
 };
 
 export const atualizarDocumento = (nomeDocumento: string, texto: string) => {
-  const resultadoAtualizacao = documentosColecao.updateOne({ nome: nomeDocumento }, { $set: { conteudo: texto } });
+  const resultadoAtualizacao = documentosColecao.updateOne(
+    {
+      nome: nomeDocumento,
+    },
+    { $set: { conteudo: texto } },
+  );
 
   return resultadoAtualizacao;
 };
