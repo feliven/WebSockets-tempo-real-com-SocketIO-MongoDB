@@ -10,7 +10,12 @@ import "./dbConnect.ts";
 
 const app = express();
 const httpServer = http.createServer(app);
-const io = new Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>(httpServer);
+const io = new Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>(httpServer, {
+  cors: {
+    origin: ["http://127.0.0.1:5500", "http://localhost:5500"], // Live Server
+    methods: ["GET", "POST"],
+  },
+});
 
 const port = Number(process.env.port || 3000);
 

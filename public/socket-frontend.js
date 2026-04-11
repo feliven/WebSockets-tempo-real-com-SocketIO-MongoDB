@@ -1,6 +1,6 @@
 import { atualizarTextoEditor } from "./documento.js";
 
-const socket = io();
+const socket = io("http://localhost:3000");
 
 export const selecionarDocumento = (nomeDocumento) => {
   socket.emit("selecionar_documento", nomeDocumento, (texto) => {
