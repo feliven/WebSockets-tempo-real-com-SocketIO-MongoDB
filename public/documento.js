@@ -8,16 +8,7 @@ const elemTituloDocumento = document.getElementById("titulo-documento");
 elemTituloDocumento.textContent = nomeDocumento || "Documento sem título";
 
 const elemEditorTexto = document.getElementById("editor-texto");
-
-selecionarDocumento(idDocumento, (resposta) => {
-  if (!resposta.existe) {
-    elemTituloDocumento.textContent = "(Documento inexistente)";
-    elemEditorTexto.disabled = true;
-    elemEditorTexto.placeholder = "Documento não existe ou foi removido.";
-    return;
-  }
-  elemEditorTexto.value = resposta.conteudo;
-});
+const elemBotaoExcluir = document.getElementById("excluir-documento");
 
 elemEditorTexto.addEventListener("keyup", (e) => {
   if (elemEditorTexto.disabled) return;
@@ -27,11 +18,18 @@ elemEditorTexto.addEventListener("keyup", (e) => {
   emitirTextoDigitado(doc);
 });
 
+elemBotaoExcluir.addEventListener("click", () => {
+  excluirDocumento(idDocumento);
+  window.location.assign("/public/index.html");
+});
+
 export const atualizarTextoEditor = (texto) => {
   elemEditorTexto.value = texto;
 };
 
 export const desabilitarEdicao = (idDocumentoExcluido) => {
+  elemBotaoExcluir.disabled = true;
+
   if (idDocumentoExcluido === idDocumento) {
     elemEditorTexto.disabled = true;
     elemEditorTexto.placeholder = "Este documento foi excluído.";
@@ -39,9 +37,14 @@ export const desabilitarEdicao = (idDocumentoExcluido) => {
   }
 };
 
-const elemBotaoExcluir = document.getElementById("excluir-documento");
+selecionarDocumento(idDocumento, (resposta) => {
+  if (!resposta.existe) {
+    elemBotaoExcluir.disabled = true;
 
-elemBotaoExcluir.addEventListener("click", () => {
-  excluirDocumento(idDocumento);
-  window.location.assign("/public/index.html");
+    elemTituloDocumento.textContent = "(Documento inexistente)";
+    elemEditorTexto.disabled = true;
+    elemEditorTexto.placeholder = "Documento não existe ou foi removido.";
+    return;
+  }
+  elemEditorTexto.value = resposta.conteudo;
 });
