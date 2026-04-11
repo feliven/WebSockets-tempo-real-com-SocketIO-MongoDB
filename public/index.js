@@ -1,4 +1,4 @@
-import "./socket-frontend-index.js";
+import { criarDocumento } from "./socket-frontend-index.js";
 
 const elemListaDocumentos = document.getElementById("lista-documentos");
 
@@ -17,3 +17,14 @@ export const listarDocumentos = (docs) => {
     elemListaDocumentos.appendChild(linkDocumento);
   });
 };
+
+const elemNomeNovoDocumento = document.getElementById("input-documento");
+const elemFormNovoDocumento = document.getElementById("form-adiciona-documento");
+
+elemFormNovoDocumento.addEventListener("submit", () => {
+  const nomeNovoDoc = elemNomeNovoDocumento.value;
+
+  console.log({ nomeNovoDoc });
+
+  criarDocumento(nomeNovoDoc);
+});

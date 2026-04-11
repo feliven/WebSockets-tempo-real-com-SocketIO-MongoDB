@@ -16,6 +16,7 @@ export type ServerToClientEvents = {
 
 export type ClientToServerEvents = {
   obter_documentos: (callback: (retornarDocs: WithId<Documento>[]) => WithId<Documento>[]) => void;
+  criar_documento: (nomeDocumento: string) => void;
   selecionar_documento: (nomeDocumento: string, callback: (texto: string) => void) => void;
   texto_editor: (dados: TextoENomeDocumento) => void;
 };

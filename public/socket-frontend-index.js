@@ -6,3 +6,7 @@ socket.emit("obter_documentos", (docs) => {
   console.log({ docs });
   listarDocumentos(docs);
 });
+
+export const criarDocumento = (nomeDoc) => {
+  socket.emit("criar_documento", nomeDoc);
+};
