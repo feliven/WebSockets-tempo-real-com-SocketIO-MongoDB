@@ -7,7 +7,6 @@ import {
   excluirDocumento,
   obterDocumentos,
 } from "./documentosDb.ts";
-import type { WithId } from "mongodb";
 // When using nodenext module resolution, you need to import the .ts file, not .js
 
 const documentos: Documento[] = [
@@ -48,8 +47,9 @@ io.on("connection", (socket) => {
 
     if (doc) {
       socket.join(doc._id.toString());
-
-      retornarTexto(doc.conteudo);
+      retornarTexto({ existe: true, conteudo: doc.conteudo });
+    } else {
+      retornarTexto({ existe: false, conteudo: null });
     }
   });
 

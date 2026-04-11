@@ -5,6 +5,11 @@ export type Documento = {
   conteudo: string;
 };
 
+export type DocumentoResposta = {
+  existe: boolean;
+  conteudo: string | null;
+};
+
 export type ServerToClientEvents = {
   texto_para_clients: (texto: string) => void;
   documento_excluido: (idDocumento: string) => void;
@@ -13,8 +18,8 @@ export type ServerToClientEvents = {
 export type ClientToServerEvents = {
   criar_documento: (nomeDocumento: string) => void;
   excluir_documento: (idDocumento: string) => void;
-  obter_documentos: (callback: (retornarDocs: WithId<Documento>[]) => WithId<Documento>[]) => void;
-  selecionar_documento: (idDocumento: string, callback: (texto: string) => void) => void;
+  obter_documentos: (callback: (retornarDocs: WithId<Documento>[]) => void) => void;
+  selecionar_documento: (idDocumento: string, callback: (resposta: DocumentoResposta) => void) => void;
   texto_editor: (dados: WithId<Documento>) => void;
 };
 

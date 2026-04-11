@@ -2,9 +2,12 @@ import { atualizarTextoEditor, desabilitarEdicao } from "./documento.js";
 
 const socket = io("http://localhost:3000");
 
-export const selecionarDocumento = (idDocumento) => {
-  socket.emit("selecionar_documento", idDocumento, (texto) => {
-    atualizarTextoEditor(texto);
+export const selecionarDocumento = (idDocumento, callback) => {
+  socket.emit("selecionar_documento", idDocumento, (resposta) => {
+    if (resposta.existe) {
+      atualizarTextoEditor(resposta.conteudo);
+    }
+    callback(resposta);
   });
 };
 

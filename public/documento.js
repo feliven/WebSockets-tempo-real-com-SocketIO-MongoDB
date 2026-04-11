@@ -6,9 +6,18 @@ const idDocumento = parametros.get("id");
 
 const elemTituloDocumento = document.getElementById("titulo-documento");
 elemTituloDocumento.textContent = nomeDocumento || "Documento sem título";
-selecionarDocumento(idDocumento);
 
 const elemEditorTexto = document.getElementById("editor-texto");
+
+selecionarDocumento(idDocumento, (resposta) => {
+  if (!resposta.existe) {
+    elemTituloDocumento.textContent = "(Documento inexistente)";
+    elemEditorTexto.disabled = true;
+    elemEditorTexto.placeholder = "Documento não existe ou foi removido.";
+    return;
+  }
+  elemEditorTexto.value = resposta.conteudo;
+});
 
 elemEditorTexto.addEventListener("keyup", (e) => {
   if (elemEditorTexto.disabled) return;
@@ -25,7 +34,7 @@ export const atualizarTextoEditor = (texto) => {
 export const desabilitarEdicao = (idDocumentoExcluido) => {
   if (idDocumentoExcluido === idDocumento) {
     elemEditorTexto.disabled = true;
-    elemEditorTexto.placeholder = "Este documento foi excluído";
+    elemEditorTexto.placeholder = "Este documento foi excluído.";
     alert("Este documento foi excluído por outro usuário!");
   }
 };
