@@ -42,7 +42,7 @@ io.on("connection", (socket) => {
     if (resultado?.acknowledged) {
       const idResultado = resultado.insertedId;
       const novoDoc = { _id: idResultado, nome: nomeDocumento };
-      io.emit("atualizar_homepage", novoDoc);
+      io.emit("adicionar_doc_homepage", novoDoc);
     }
   });
 
@@ -51,7 +51,7 @@ io.on("connection", (socket) => {
 
     if (resultado?.acknowledged) {
       io.emit("documento_excluido", idDocumento);
-      io.emit("atualizar_homepage", { _id: new ObjectId(idDocumento) });
+      io.emit("remover_doc_homepage", idDocumento);
     }
   });
 

@@ -11,13 +11,10 @@ export const criarDocumento = (nomeDoc) => {
   socket.emit("criar_documento", nomeDoc);
 };
 
-socket.on("atualizar_homepage", (doc) => {
-  // alert(`Documento com id ${id} foi adicionado. Recarregando página...`);
-  // window.location.reload();
+socket.on("adicionar_doc_homepage", (doc) => {
+  listarLinkDocumento(doc);
+});
 
-  if (doc && !doc.nome) {
-    removerLinkDocumento(doc._id);
-  } else {
-    listarLinkDocumento(doc);
-  }
+socket.on("remover_doc_homepage", (id) => {
+  removerLinkDocumento(id);
 });

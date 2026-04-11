@@ -5,21 +5,18 @@ export type Documento = {
   conteudo: string | null;
 };
 
-export type DocumentoResposta = Documento & {
-  existe: boolean;
-};
-
 export type ServerToClientEvents = {
   texto_para_clients: (texto: string) => void;
   documento_excluido: (idDocumento: string) => void;
-  atualizar_homepage: (doc: Partial<WithId<Documento>>) => void;
+  adicionar_doc_homepage: (doc: Partial<WithId<Documento>>) => void;
+  remover_doc_homepage: (idDocumento: string) => void;
 };
 
 export type ClientToServerEvents = {
   criar_documento: (nomeDocumento: string) => void;
   excluir_documento: (idDocumento: string) => void;
   obter_documentos: (callback: (retornarDocs: WithId<Documento>[]) => void) => void;
-  selecionar_documento: (idDocumento: string, callback: (resposta: DocumentoResposta) => void) => void;
+  selecionar_documento: (idDocumento: string, callback: (resposta: Documento & { existe: boolean }) => void) => void;
   texto_editor: (dados: WithId<Documento>) => void;
 };
 
