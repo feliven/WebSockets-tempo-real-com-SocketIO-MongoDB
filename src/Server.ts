@@ -5,6 +5,8 @@ import http from "http";
 import { Server } from "socket.io";
 import type { ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData } from "./types.ts";
 
+import "./dbConnect.ts";
+
 const app = express();
 const httpServer = http.createServer(app);
 const io = new Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>(httpServer);
